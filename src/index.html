@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ruslans Bot-Farm</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+
+    <div id="app">
+
+        <div class="server-voice">
+            <b>  Послание разработчика:</b>
+            {{permission.mO0sg}}
+        </div>
+      <div v-if="help" class="help">
+        <h4> Краткий Гайд </h4> <i @click="help=false" class='fas fa-times' style='font-size:18px;color:#FE8A71; position: absolute; right: 10px; top: 10px'></i>
+        <b> Что за приложение? </b> <i> Данное приложение дает возможность использовать страничку Вконтакте как бота.</i><br>
+        <b> Что такое Token? </b> <i> Определенный набор символов, дающий возможность управления страничкой ВК этому приложеию.</i><br>
+        <b> Насколько безопасно доверять токен приложению? </b> <i> Безопасно. Токен хранится локально на устройстве пользования и не передается на сервер.</i><br>
+        <b> Где получить токен? </b> <i> Я пользуюсь <b>https://vkhost.github.io</b> . Переходим, выбираем к примеру Kate Mobile и сверху в строке браузера можем заметить:
+        <br><u>https://oauth.vk.com/blank.html#access_token=<b>qwerty12345</b>&expires_in=0&user_id=1</u><br>
+        между access_token= и &expires_in скрывается наш токен, к примеру <b>qwerty12345</b> (никому больше не доверяйте Ваш токен).</i><br>
+        <b> Что делать с токеном дальше? </b> <i> Вставить в желтое окошко и нажать кнопку "set token".</i><br>
+        <b> Как настраивать бота? </b> <i> Остальной функционал подписан.</i><br>
+        <b> Что будет в следующих версиях? </b> <i> Если мне не надоест этим заниматься, то займусь расширением функционала. Первые в списке -
+        добавление медиа вложений, кнопок, динамических данных (бот сможет использовать данные пишущего ему человека - обращаться по имени, вычислять погоду в его городе или знак зодиака).</i><br>
+      </div>
+      <header>
+        <div class="settings-block">
+          <input class="token-area" type="text" v-model="token"><button type="button" @click="setToken"> set token  <i class='fas fa-fingerprint'></i></button>
+          <button type="button" @click="help=!help"> help  <i class='fas fa-book-reader'></i></button>
+
+          <div class="name-container">
+            <h3 style='color:#FE8A71'>{{user.first_name}} </h3> <h3 style='color:#0E9AA7'> {{user.last_name}}</h3>
+          </div>
+        </div>
+        <!--<span @click="exit" style='font-size:14px;cursor:pointer;color:#FE8A71'> Выход здеся <i class='fas fa-times' style='font-size:24px;'></i></span>-->
+      </header>
+      <div class="control-block-container">
+        <div class="control-block-header">
+          <p id="left">Введите слово, его фрагмент или фразу для триггера бота</p>
+          <p id="right">Введите ответ бота, котрый будет выбран случайно из предложенных вариантов</p>
+        </div>
+
+        <div v-for="(key, i) in keys" class="control-block">
+
+          <div class="control-block-get-message-get-container">
+
+            <label v-for="(trigger, t) in key.triggers">
+              <input v-model="key.triggers[t]" type="text" name="control-block-get-message-get-input">
+              <span class="remove-trigger-icon" @click="removeTrigger(i,t)"><i class='fas fa-trash-alt' style='font-size:18px;color:#FE8A71'></i></span><br>
+            </label><span class="push-trigger-icon" @click="pushTrigger(i)"><i class='fas fa-plus-square' style='font-size:14px;color:#F6CD61'> добавить триггер</i></span>
+          </div>
+
+          <div class="control-block-get-message-send-container">
+
+            <div v-for="(answer, a) in key.answers">
+              <textarea v-model="key.answers[a]" type="text" name="control-block-get-message-send-input"></textarea>
+              <span class="remove-trigger-icon" @click="removeAnswer(i,a)"><i class='fas fa-trash-alt' style='font-size:18px;color:#FE8A71'></i></span><br>
+            </div><span class="push-trigger-icon" @click="pushAnswer(i)"><i class='fas fa-plus' style='font-size:14px;color:#F6CD61'> добавить ответ</i></span>
+          </div>
+          <span class="remove-block-icon" @click="removeBlock(i)"><i class='fas fa-times' style='font-size:18px;color:#FE8A71'></i></span>
+        </div>
+
+      </div>
+      <div class="footer-buttons">
+        <button @click="pushBlock()" style='font-size:14px;background:#F6CD61'> add block <i class='fas fa-plus'></i></button>
+        <button @click="cancel()" style='font-size:14px;background:#FE8A71'> cancel <i class='fas fa-undo'></i></button>
+        <button @click="save()" style='font-size:14px;background:#3DA4AB'> save <i class='fas fa-save'></i></button>
+      </div>
+        <br>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script src="bot.js"></script>
+  </body>
+</html>
