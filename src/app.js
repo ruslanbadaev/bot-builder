@@ -53,10 +53,10 @@ let app = new Vue({
   mounted: function () {
     this.$nextTick(function () {
 
-      !!!store.get('keys')?store.set('keys', [{triggers: ['Привет бот', 'hi bot'], answers: ['Привет юзер', 'hi user']}]):'';
-      !!!store.get('token')?store.set('token', 'Введите токен'):'';
-      !!!store.get('user')?store.set('user', {first_name: 'Введите валидный токен в поле выше и ', last_name: 'примените изменения'}):'';
-      !!!store.get('permission')?store.set('permission', {mg0t:0, q: false}):'';
+      !store.get('keys')?store.set('keys', [{triggers: ['Привет бот', 'hi bot'], answers: ['Привет юзер', 'hi user']}]):'';
+      !store.get('token')?store.set('token', 'Введите токен'):'';
+      !store.get('user')?store.set('user', {first_name: 'Введите валидный токен в поле выше и ', last_name: 'примените изменения'}):'';
+      !store.get('permission')?store.set('permission', {mg0t:0, q: false}):'';
       this.keys = store.get('keys')
 
       store.get('keys') !== undefined ? this.keys = store.get('keys') : console.log('keys is undefined');
